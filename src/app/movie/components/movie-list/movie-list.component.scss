@@ -1,0 +1,18 @@
+.action{
+  h2{
+    background: mediumpurple;
+    padding: 20px;
+
+  }
+  .action-list{
+    display: flex;
+    flex-direction: row;
+    justify-content:
+      space-around;
+    .action-movie{
+       border: 1px solid black;
+       padding: 8px;
+  }
+  }
+}
+
