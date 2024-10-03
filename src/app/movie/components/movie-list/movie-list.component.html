@@ -1,20 +1,25 @@
-
-
 <div class="movie-list-container">
+  <!-- Watchlist Button -->
   <div class="header">
     <button class="watchlist-btn">Go to Watchlist</button>
   </div>
 
+  <!-- Loop through Genres -->
   <div *ngFor="let genre of genres" class="genre-section">
+    <!-- Genre Title -->
     <h2>{{ genre.name }}</h2>
+
+    <!-- Movies Grid for the Genre -->
     <div class="movies-grid">
       <div class="movie-card" *ngFor="let movie of moviesByGenre[genre.name]">
+        <!-- Movie Poster with "+" icon in the top-right corner -->
         <div class="movie-poster">
           <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{ movie.title }}" />
           <div class="add-to-watchlist">
-            <i class="fa fa-plus-circle"></i>
+            <i class="fas fa-plus"></i> <!-- Font Awesome "+" Icon -->
           </div>
         </div>
+        <!-- Movie Title -->
         <h3>{{ movie.title }}</h3>
       </div>
     </div>
