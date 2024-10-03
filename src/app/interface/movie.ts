@@ -1,6 +1,6 @@
 import {Genre} from "./genre";
 
-export interface Mobie {
+export interface Movie {
   adult: boolean
   backdrop_path: string
   budget: number
