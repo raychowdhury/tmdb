@@ -25,7 +25,7 @@ export class MainService {
   getMovieGenres(): Observable<Genre[]> {
     const url = `${this.apiUrl}/genre/movie/list?language=en&api_key=${this.apiKey}`;
     return this.http.get<Genre[]>(url);
-    console.log(this.http.get<Genre[]>(url));
+
   }
 
 
