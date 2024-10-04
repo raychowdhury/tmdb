@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
-import {Movie} from "../interface/movie";
 import {Genre} from "../interface/genre";
 
 @Injectable({
@@ -17,9 +16,6 @@ export class MainService {
     return this.http.get(`${this.apiUrl}/movie/popular?api_key=${this.apiKey}`);
 
 
-  }
-  getMovieId(id: string): Observable<Movie> {
-    return this.http.get<Movie>(`${this.apiUrl}/movie/${id}?api_key=${this.apiKey}`);
   }
 
   getMovieGenres(): Observable<Genre[]> {
