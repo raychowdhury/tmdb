@@ -10,11 +10,11 @@ export class MainService {
   private apiKey = 'fb969352d414f714f97f3ba2765c07aa';
   private apiUrl = 'https://api.themoviedb.org/3';
 
+
   constructor(private http: HttpClient) {}
 
   getMovies() {
     return this.http.get(`${this.apiUrl}/movie/popular?api_key=${this.apiKey}`);
-
 
   }
 
@@ -22,6 +22,10 @@ export class MainService {
     const url = `${this.apiUrl}/genre/movie/list?language=en&api_key=${this.apiKey}`;
     return this.http.get<Genre[]>(url);
 
+  }
+  getDiscoverGenre(genreId: number): Observable<any> {
+    const url = `${this.apiUrl}/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${genreId}&api_key=${this.apiKey}`;
+    return this.http.get<any>(url);
   }
 
 

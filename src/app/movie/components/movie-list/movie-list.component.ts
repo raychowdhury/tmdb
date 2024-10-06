@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from '../../../services/main.service';
+import { Movie } from '../../../interface/movie';  // Import the Movie interface
+import { Genre } from '../../../interface/genre';  // Import the Genre interface
 
 @Component({
   selector: 'app-movie-list',
@@ -7,38 +9,20 @@ import { MainService } from '../../../services/main.service';
   styleUrls: ['./movie-list.component.scss']
 })
 export class MovieListComponent implements OnInit {
-  moviesByGenre: any = {};
-  genres: any[] = [];
+  moviesByGenre: { [key: string]: Movie[] } = {};  // Use Movie interface for moviesByGenre
+  genres: Genre[] = [];  // Use Genre interface for genres
 
   constructor(private movieService: MainService) {}
 
   ngOnInit() {
-    // Fetch genres and movies from the service
     this.movieService.getMovieGenres().subscribe((data: any) => {
-      this.genres = data.genres; // Assuming API response contains genres array
+      this.genres = data.genres as Genre[];  // Cast genres to Genre[]
 
-
-      this.movieService.getMovies().subscribe((movieData: any) => {
-        const movies = movieData.results; // Assuming movie results are in 'results'
-
-
-        this.groupMoviesByGenre(movies);
-        this.filterGenresWithNoMovies(); // Filter out genres with zero movies
+      this.genres.forEach((genre) => {
+        this.movieService.getDiscoverGenre(genre.id).subscribe((movieData: any) => {
+          this.moviesByGenre[genre.name] = movieData.results as Movie[];  // Cast movieData to Movie[]
+        });
       });
     });
-  }
-
-  // Method to group movies by genre
-  groupMoviesByGenre(movies: any[]) {
-    this.genres.forEach(genre => {
-      this.moviesByGenre[genre.name] = movies.filter((movie: any) =>
-        movie.genre_ids.includes(genre.id)
-      );
-    });
-  }
-
-  // Method to filter out genres with no movies
-  filterGenresWithNoMovies() {
-    this.genres = this.genres.filter(genre => this.moviesByGenre[genre.name] && this.moviesByGenre[genre.name].length > 0);
   }
 }
