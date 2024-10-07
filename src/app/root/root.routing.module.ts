@@ -9,7 +9,7 @@ const routes: Routes = [
     component: RootDefaultComponent,
     children: [
       {
-        path: 'movie',
+        path: '',
         loadChildren: () => import('../movie/movie.module').then(m => m.MovieModule)
       }
     ]
