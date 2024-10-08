@@ -1,0 +1,153 @@
+.movie-details-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  font-family: Arial, sans-serif;
+}
+
+.movie-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 30px;
+}
+
+.movie-poster {
+  width: 300px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.movie-info {
+  flex: 1;
+  margin-left: 20px;
+  max-width: 800px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.overview {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+a {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.rating {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.cast-crew-section {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 20px;
+}
+
+.cast-list, .crew-list {
+  flex: 1;
+  margin: 0 20px;
+}
+
+.cast-list h2, .crew-list h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.cast-list ul, .crew-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.cast-list li, .crew-list li {
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.related-movies {
+  margin-top: 40px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.related-movies h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.related-movies-container {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+}
+
+.related-movie-card {
+  min-width: 150px;
+  text-align: center;
+}
+
+.related-movie-card img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.related-movie-card p {
+  font-size: 1rem;
+  color: #333;
+}
+
+
+.top-bar {
+  width: 100%;
+  background-color: #3b82f6;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.top-bar button {
+  background-color: white;
+  color: #3b82f6;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.top-bar button:hover {
+  background-color: #ffffffcc;
+}
+
+.movie-details-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  font-family: Arial, sans-serif;
+  margin-top: 20px;  /* Add margin to create space for top bar */
+}

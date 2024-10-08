@@ -1,1 +1,45 @@
-<p>movie-details works!</p>
+<div class="top-bar">
+  <button (click)="goBack()">Back to Home</button>
+</div>
+
+<div class="movie-details-container">
+  <!-- Movie Poster and Info Section -->
+  <div class="movie-header">
+    <img class="movie-poster" [src]="'https://image.tmdb.org/t/p/w500' + movieDetails.poster_path" alt="{{ movieDetails.title }}" />
+    <div class="movie-info">
+      <h1>{{ movieDetails.title }}</h1>
+      <p class="overview"><strong>Overview:</strong> {{ movieDetails.overview }}</p>
+      <p><strong>IMDb Link:</strong>
+        <a [href]="'https://www.imdb.com/title/' + movieDetails.imdb_id" target="_blank">View on IMDb</a>
+      </p>
+      <p class="rating"><strong>Rating:</strong> {{ movieDetails.vote_average }} / 10</p>
+    </div>
+  </div>
+
+  <!-- Cast and Crew Section -->
+  <div class="cast-crew-section" *ngIf="movieCredits">
+    <div class="cast-list">
+      <h2>Cast</h2>
+      <ul>
+        <li *ngFor="let cast of movieCredits.cast | slice:0:5">{{ cast.name }} as {{ cast.character }}</li>
+      </ul>
+    </div>
+    <div class="crew-list">
+      <h2>Crew</h2>
+      <ul>
+        <li *ngFor="let crew of movieCredits.crew | slice:0:5">{{ crew.name }} - {{ crew.job }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Related Movies Section -->
+  <div class="related-movies" *ngIf="relatedMovies.length > 0">
+    <h2>Related Movies</h2>
+    <div class="related-movies-container">
+      <div *ngFor="let movie of relatedMovies" class="related-movie-card">
+        <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{ movie.title }}" />
+        <p>{{ movie.title }}</p>
+      </div>
+    </div>
+  </div>
+</div>

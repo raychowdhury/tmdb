@@ -10,7 +10,7 @@
       <h2>{{ genre.name }}</h2>
 
       <div class="movies-grid">
-        <div class="movie-card" *ngFor="let movie of moviesByGenre[genre.name] | slice:0:5">
+        <div class="movie-card" *ngFor="let movie of moviesByGenre[genre.name] | slice:0:5" (click)="goToMovieDetails(movie.id)">
           <div class="movie-poster">
             <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{ movie.title }}" />
             <div class="add-to-watchlist">

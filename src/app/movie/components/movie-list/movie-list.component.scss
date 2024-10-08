@@ -58,6 +58,7 @@ $text-color-light: #555;
         position: relative;
         width: 180px;  // Fixed width for movie card
         max-width: 180px;
+        cursor: pointer;
 
         .movie-poster {
           position: relative;
