@@ -33,4 +33,12 @@ export class MovieListComponent implements OnInit {
   goToMovieDetails(movieId: number) {
     this.router.navigate(['/movie-details', movieId]);  // Navigate to the Movie Details component
   }
+
+  clickCount: number = 0;
+
+  countClicks(event: Event,movieId: number,movieTitle:string) {
+    event.stopPropagation();
+    this.clickCount++;
+    console.log(`Add to Watchlist clicked for movie ID: ${movieId} & name is: ${movieTitle}, Total Clicks: ${this.clickCount}`);
+  }
 }

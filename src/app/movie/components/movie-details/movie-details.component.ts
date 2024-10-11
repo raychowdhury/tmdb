@@ -10,6 +10,8 @@ import { MovieCredits } from '../../../interface/movie-credit';
   styleUrls: ['./movie-details.component.scss']
 })
 export class MovieDetailsComponent implements OnInit {
+
+
   movieId: number = 0;
   movieDetails!: Movie;
   movieCredits!: MovieCredits;
