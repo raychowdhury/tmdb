@@ -22,7 +22,7 @@
         <div class="movie-card" *ngFor="let movie of moviesByGenre[genre.name] | slice:0:5" (click)="goToMovieDetails(movie.id)">
           <div class="movie-poster">
             <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{ movie.title }}" />
-            <div class="add-to-watchlist" (click)="countClicks($event, movie.id, movie.title)">
+            <div class="add-to-watchlist" (click)="addMovies($event, movie.id, movie.title)">
               <i class="fas fa-plus"></i>
             </div>
           </div>

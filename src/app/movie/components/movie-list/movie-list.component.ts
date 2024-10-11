@@ -12,7 +12,7 @@ import { Genre } from '../../../interface/genre';  // Import the Genre interface
 export class MovieListComponent implements OnInit {
   moviesByGenre: { [key: string]: Movie[] } = {};  // Holds movies grouped by genre
   genres: Genre[] = [];  // List of genres
-  clickCount: number = 0;  // Counts clicks for add-to-watchlist
+  movieCount: number = 0;  // Counts clicks for add-to-watchlist
 
   isDropdownOpen: boolean = false;  // Controls dropdown visibility
   watchlist: { id: number, title: string }[] = [];  // Watchlist array to hold movie details
@@ -44,9 +44,9 @@ export class MovieListComponent implements OnInit {
   }
 
   // Handle clicks to add movies to the watchlist
-  countClicks(event: Event, movieId: number, movieTitle: string) {
+  addMovies(event: Event, movieId: number, movieTitle: string) {
     event.stopPropagation();  // Prevents bubbling up of the click event
-    this.clickCount++;
+    this.movieCount++;
 
     // Check if the movie is already in the watchlist
     const movieExists = this.watchlist.some(movie => movie.id === movieId);
