@@ -50,15 +50,11 @@ export class MovieListComponent implements OnInit {
 
     // Check if the movie is already in the watchlist
     const movieExists = this.watchlist.some(movie => movie.id === movieId);
+
     if (!movieExists) {
       // Add movie to watchlist if not already added
       this.watchlist.push({ id: movieId, title: movieTitle });
-      console.log(`Movie added to Watchlist: ID: ${movieId}, Title: ${movieTitle}`);
-    } else {
-      console.log(`Movie already in Watchlist: ID: ${movieId}, Title: ${movieTitle}`);
     }
-
-    console.log(`Total Clicks: ${this.clickCount}`);
   }
 
   // Toggle dropdown visibility for the watchlist
@@ -66,7 +62,7 @@ export class MovieListComponent implements OnInit {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
-  watchfulllist() {
+  watchfullist() {
     this.router.navigate(['movie-watch-list']);  // Change '/movies' to your main movie list route
   }
 }
