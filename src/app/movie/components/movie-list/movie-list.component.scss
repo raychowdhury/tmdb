@@ -4,6 +4,7 @@ $genre-background: #e7e5ff;
 $text-color-dark: #333;
 $text-color-light: #555;
 
+/* Watchlist Section */
 .watchlist-section {
   display: flex;
   align-items: center;
@@ -11,7 +12,6 @@ $text-color-light: #555;
   padding: 15px 20px;
   background-color: $genre-background;
   border-radius: 10px;
-  //margin-bottom: 20px;
 
   i {
     font-size: 24px;
@@ -32,6 +32,7 @@ $text-color-light: #555;
   }
 }
 
+/* Movie List Container */
 .movie-list-container {
   padding: 20px;
   background-color: $background-light;
@@ -42,32 +43,38 @@ $text-color-light: #555;
     h2 {
       margin-left: 10px;
       color: $text-color-dark;
+      font-weight: bold;
     }
 
     .movies-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));  // Adjusts for responsiveness
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Responsive grid */
       gap: 20px;
       padding: 10px;
       background-color: $genre-background;
       border-radius: 10px;
-      justify-items: center;  // Centers grid items
+      justify-items: center;  /* Centers grid items */
 
       .movie-card {
         text-align: center;
         position: relative;
-        width: 180px;  // Fixed width for movie card
-        max-width: 180px;
+        width: 180px;  /* Fixed width for movie card */
         cursor: pointer;
+        transition: transform 0.3s ease; /* Smooth hover effect */
+
+        &:hover {
+          transform: scale(1.05); /* Slight scale effect on hover */
+        }
 
         .movie-poster {
           position: relative;
 
           img {
-            width: 100%;  // Ensures full width
+            width: 100%;  /* Ensures full width */
             height: auto;
             border-radius: 8px;
             aspect-ratio: 2/3;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
           }
 
           .add-to-watchlist {
@@ -83,6 +90,7 @@ $text-color-light: #555;
             align-items: center;
             width: 25px;
             height: 25px;
+            transition: background-color 0.3s ease;
 
             i {
               font-size: 16px;
@@ -98,10 +106,14 @@ $text-color-light: #555;
           margin-top: 10px;
           font-size: 14px;
           color: $text-color-light;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;  /* Truncate long titles */
         }
       }
     }
 
+    /* Custom Scrollbar for movie grid */
     .movies-grid::-webkit-scrollbar {
       height: 8px;
     }
@@ -111,4 +123,54 @@ $text-color-light: #555;
       border-radius: 4px;
     }
   }
+}
+
+/* Watchlist Button and Dropdown */
+.watchlist-section {
+  position: relative;
+}
+
+.watchlist-btn {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.dropdown-content {
+  position: absolute;
+  top: 100%;  /* Ensures it appears just below the button */
+  right: 0;   /* Aligns the dropdown to the right side */
+  background-color: white;
+  z-index: 1;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1); /* Optional: Add some shadow */
+  padding: 20px;
+  border-radius: 8px;
+  width: 200px; /* Set width for dropdown */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items:center;
+  gap: 20px;
+}
+
+.dropdown-content ul {
+  list-style: none;
+  padding: 5px;
+  margin: 5px;
+}
+
+.dropdown-content ul li {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 8px 12px;
+  margin: 8px;
+  cursor: pointer;
+}
+
+.dropdown-content ul li:hover {
+  background-color: #f1f1f1;
 }

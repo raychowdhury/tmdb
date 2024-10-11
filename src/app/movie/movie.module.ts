@@ -8,11 +8,14 @@ import { MovieDetailsComponent } from './components/movie-details/movie-details.
 import {MainService} from "../services/main.service";
 import {HttpClientModule} from "@angular/common/http";
 
+import { MovieWatchListComponent } from './components/movie-watch-list/movie-watch-list.component';
+
 @NgModule({
   declarations: [
     MovieDefaultComponent,
     MovieListComponent,
-    MovieDetailsComponent
+    MovieDetailsComponent,
+    MovieWatchListComponent
   ],
   imports: [
     CommonModule,

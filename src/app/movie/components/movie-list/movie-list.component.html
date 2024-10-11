@@ -1,6 +1,15 @@
 <div class="watchlist-section">
   <i class="fas fa-tv"></i> <!-- FontAwesome icon -->
-  <button class="watchlist-btn">Go to Watchlist</button>
+  <button class="watchlist-btn" (click)="toggleDropdown()">Go to Watchlist</button>
+
+  <!-- Dropdown content for watchlist items -->
+  <div *ngIf="isDropdownOpen" class="dropdown-content">
+    <ul>
+      <li *ngFor="let movie of watchlist">{{ movie.title }}</li>
+    </ul>
+    <!-- Button to view the full watchlist -->
+    <button class="watchlist-full" (click)="watchfulllist()">View Full Watchlist</button>
+  </div>
 </div>
 
 <div class="movie-list-container">
@@ -13,7 +22,7 @@
         <div class="movie-card" *ngFor="let movie of moviesByGenre[genre.name] | slice:0:5" (click)="goToMovieDetails(movie.id)">
           <div class="movie-poster">
             <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{ movie.title }}" />
-            <div class="add-to-watchlist" (click)="countClicks($event, movie.id,movie.title)">
+            <div class="add-to-watchlist" (click)="countClicks($event, movie.id, movie.title)">
               <i class="fas fa-plus"></i>
             </div>
           </div>

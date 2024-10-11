@@ -48,4 +48,6 @@ export class MovieDetailsComponent implements OnInit {
   goBack() {
     this.router.navigate(['']);  // Change '/movies' to your main movie list route
   }
+
+
 }

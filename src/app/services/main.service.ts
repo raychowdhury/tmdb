@@ -42,4 +42,6 @@ export class MainService {
     const url = `${this.apiUrl}/movie/${movieId}/recommendations?api_key=${this.apiKey}&language=en-US`;
     return this.http.get<any>(url);
   }
+
+
 }
