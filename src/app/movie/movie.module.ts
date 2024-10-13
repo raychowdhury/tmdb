@@ -9,18 +9,23 @@ import {MainService} from "../services/main.service";
 import {HttpClientModule} from "@angular/common/http";
 
 import { MovieWatchListComponent } from './components/movie-watch-list/movie-watch-list.component';
+import { MovieHeaderComponent } from './components/movie-header/movie-header.component';
 
 @NgModule({
   declarations: [
     MovieDefaultComponent,
     MovieListComponent,
     MovieDetailsComponent,
-    MovieWatchListComponent
+    MovieWatchListComponent,
+    MovieHeaderComponent
   ],
   imports: [
     CommonModule,
     MovieRoutingModule,
     HttpClientModule
+  ],
+  exports: [
+    MovieHeaderComponent
   ],
   providers: [MainService
   ]

@@ -12,12 +12,13 @@ import { Genre } from '../../../interface/genre';  // Import the Genre interface
 export class MovieListComponent implements OnInit {
   moviesByGenre: { [key: string]: Movie[] } = {};  // Holds movies grouped by genre
   genres: Genre[] = [];  // List of genres
-  movieCount: number = 0;  // Counts clicks for add-to-watchlist
-
+  movieCount: number = 0;
+  watchlist: { id: number, title: string }[] = [];
   isDropdownOpen: boolean = false;  // Controls dropdown visibility
-  watchlist: { id: number, title: string }[] = [];  // Watchlist array to hold movie details
 
-  constructor(private movieService: MainService, private router: Router) {}  // Inject MainService and Router
+
+  constructor(private movieService: MainService, private router: Router) {
+  }  // Inject MainService and Router
 
   ngOnInit() {
     this.fetchGenresAndMovies();  // Fetch genres and their associated movies on initialization
@@ -37,13 +38,6 @@ export class MovieListComponent implements OnInit {
       this.moviesByGenre[genreName] = movieData.results as Movie[];
     });
   }
-
-  // Navigate to movie details page
-  goToMovieDetails(movieId: number) {
-    this.router.navigate(['/movie-details', movieId]);
-  }
-
-  // Handle clicks to add movies to the watchlist
   addMovies(event: Event, movieId: number, movieTitle: string) {
     event.stopPropagation();  // Prevents bubbling up of the click event
     this.movieCount++;
@@ -53,16 +47,20 @@ export class MovieListComponent implements OnInit {
 
     if (!movieExists) {
       // Add movie to watchlist if not already added
-      this.watchlist.push({ id: movieId, title: movieTitle });
+      this.watchlist.push({id: movieId, title: movieTitle});
     }
   }
-
-  // Toggle dropdown visibility for the watchlist
-  toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
+  goToMovieDetails(movieId: number) {
+    this.router.navigate(['/movie-details', movieId]);
   }
 
+  // Handle clicks to add movies to the watchlist
   watchfullist() {
     this.router.navigate(['movie-watch-list']);  // Change '/movies' to your main movie list route
+  }
+
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
   }
 }

@@ -4,33 +4,7 @@ $genre-background: #e7e5ff;
 $text-color-dark: #333;
 $text-color-light: #555;
 
-/* Watchlist Section */
-.watchlist-section {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 20px;
-  background-color: $genre-background;
-  border-radius: 10px;
 
-  i {
-    font-size: 24px;
-    color: $primary-color;
-  }
-
-  .watchlist-btn {
-    background-color: $primary-color;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: darken($primary-color, 10%);
-    }
-  }
-}
 
 /* Movie List Container */
 .movie-list-container {
@@ -125,6 +99,35 @@ $text-color-light: #555;
   }
 }
 
+/* Watchlist Section */
+.watchlist-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  background-color: $genre-background;
+  border-radius: 10px;
+
+  i {
+    font-size: 24px;
+    color: $primary-color;
+  }
+
+  .watchlist-btn {
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+}
+
+
 /* Watchlist Button and Dropdown */
 .watchlist-section {
   position: relative;
@@ -139,6 +142,7 @@ $text-color-light: #555;
   cursor: pointer;
   font-size: 16px;
 }
+
 
 .dropdown-content {
   position: absolute;

@@ -1,16 +1,3 @@
-<div class="watchlist-section">
-  <i class="fas fa-tv"></i> <!-- FontAwesome icon -->
-  <button class="watchlist-btn" (click)="toggleDropdown()">Go to Watchlist</button>
-
-  <!-- Dropdown content for watchlist items -->
-  <div *ngIf="isDropdownOpen" class="dropdown-content">
-    <ul>
-      <li *ngFor="let movie of watchlist">{{ movie.title }}</li>
-    </ul>
-    <!-- Button to view the full watchlist -->
-    <button class="watchlist-full" (click)="watchfullist()">View Full Watchlist</button>
-  </div>
-</div>
 
 <div class="movie-list-container">
   <!-- Loop through Genres and Movies -->
