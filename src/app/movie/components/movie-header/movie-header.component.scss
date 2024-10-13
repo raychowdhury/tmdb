@@ -37,6 +37,8 @@ $text-color-light: #555;
 /* Watchlist Button and Dropdown */
 .watchlist-section {
   position: relative;
+  display: flex;
+  justify-content: space-between;
 }
 
 .watchlist-btn {
