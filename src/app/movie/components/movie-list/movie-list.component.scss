@@ -178,3 +178,17 @@ $text-color-light: #555;
 .dropdown-content ul li:hover {
   background-color: #f1f1f1;
 }
+.message-popup {
+  position: fixed;
+  top: 20px; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333; /* Dark background */
+  color: #fff; /* White text */
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 1000; /* Ensure it appears above other elements */
+  opacity: 0.9;
+  font-size: 16px;
+  text-align: center;
+}

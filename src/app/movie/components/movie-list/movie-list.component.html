@@ -21,3 +21,10 @@
     </div>
   </ng-container>
 </div>
+<!-- Add this at the top or appropriate place in your template -->
+<div *ngIf="showMessage" class="message-popup">
+  {{ message }}
+</div>
+
+<!-- Rest of your template -->
+

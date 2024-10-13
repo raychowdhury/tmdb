@@ -14,7 +14,8 @@ export class MovieListComponent implements OnInit {
   genres: Genre[] = [];  // List of genres
   movieCount: number = 0;
   watchlist: { id: number, title: string ,imgpath:string }[] = [];
-
+  message: string = '';       // The message to display
+  showMessage: boolean = false; // Controls the visibility of the message
 
 
   constructor(private movieService: MainService, private router: Router) {}  // Inject MainService and Router
@@ -39,7 +40,6 @@ export class MovieListComponent implements OnInit {
   }
   addMovies(event: Event, movieId: number, movieTitle: string, poster_path: string) {
     event.stopPropagation();
-    this.movieCount++;
 
     let storedWatchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
 
@@ -49,10 +49,22 @@ export class MovieListComponent implements OnInit {
       storedWatchlist.push({ id: movieId, title: movieTitle, poster_path: poster_path });
       localStorage.setItem('watchlist', JSON.stringify(storedWatchlist));
       console.log(`Added to watchlist: ${movieTitle}`);
+
+      this.message = `"${movieTitle}" has been added to your watchlist.`;
     } else {
       console.log(`Movie already in watchlist: ${movieTitle}`);
+
+      this.message = `"${movieTitle}" is already in your watchlist.`;
     }
+
+    this.showMessage = true; // Show the message
+
+    // Hide the message after 3 seconds
+    setTimeout(() => {
+      this.showMessage = false;
+    }, 3000);
   }
+
 
   goToMovieDetails(movieId: number) {
     this.router.navigate(['/movie-details', movieId]);
