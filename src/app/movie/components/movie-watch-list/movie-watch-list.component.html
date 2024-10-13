@@ -1,1 +1,23 @@
-<p>movie-watch-list works!</p>
+<div class="movie-list-container">
+  <div class="genre-section">
+    <h2>Your Watchlist</h2>
+    <div class="movies-grid">
+      <div
+        *ngFor="let movie of watchlist"
+        class="movie-card"
+        (click)="goToMovieDetails(movie.id)"
+      >
+        <div class="movie-poster">
+          <img
+            [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+            alt="{{ movie.title }}"
+          />
+        </div>
+        <h3>{{ movie.title }}</h3>
+        <button (click)="removeMovie(movie.id); $event.stopPropagation()">
+          Remove from Watchlist
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -13,12 +13,11 @@ export class MovieListComponent implements OnInit {
   moviesByGenre: { [key: string]: Movie[] } = {};  // Holds movies grouped by genre
   genres: Genre[] = [];  // List of genres
   movieCount: number = 0;
-  watchlist: { id: number, title: string }[] = [];
-  isDropdownOpen: boolean = false;  // Controls dropdown visibility
+  watchlist: { id: number, title: string ,imgpath:string }[] = [];
 
 
-  constructor(private movieService: MainService, private router: Router) {
-  }  // Inject MainService and Router
+
+  constructor(private movieService: MainService, private router: Router) {}  // Inject MainService and Router
 
   ngOnInit() {
     this.fetchGenresAndMovies();  // Fetch genres and their associated movies on initialization
@@ -38,29 +37,25 @@ export class MovieListComponent implements OnInit {
       this.moviesByGenre[genreName] = movieData.results as Movie[];
     });
   }
-  addMovies(event: Event, movieId: number, movieTitle: string) {
-    event.stopPropagation();  // Prevents bubbling up of the click event
+  addMovies(event: Event, movieId: number, movieTitle: string, poster_path: string) {
+    event.stopPropagation();
     this.movieCount++;
 
-    // Check if the movie is already in the watchlist
-    const movieExists = this.watchlist.some(movie => movie.id === movieId);
+    let storedWatchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
+
+    const movieExists = storedWatchlist.some((movie: any) => movie.id === movieId);
 
     if (!movieExists) {
-      // Add movie to watchlist if not already added
-      this.watchlist.push({id: movieId, title: movieTitle});
+      storedWatchlist.push({ id: movieId, title: movieTitle, poster_path: poster_path });
+      localStorage.setItem('watchlist', JSON.stringify(storedWatchlist));
+      console.log(`Added to watchlist: ${movieTitle}`);
+    } else {
+      console.log(`Movie already in watchlist: ${movieTitle}`);
     }
   }
+
   goToMovieDetails(movieId: number) {
     this.router.navigate(['/movie-details', movieId]);
   }
 
-  // Handle clicks to add movies to the watchlist
-  watchfullist() {
-    this.router.navigate(['movie-watch-list']);  // Change '/movies' to your main movie list route
-  }
-
-
-  toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
-  }
 }
