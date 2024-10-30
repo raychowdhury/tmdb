@@ -21,7 +21,6 @@ import {MovieModule} from "../movie/movie.module";
         MovieModule
     ],
   providers: [
-    MainService
   ],
   bootstrap: [RootDefaultComponent]
 })
