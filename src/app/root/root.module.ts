@@ -20,8 +20,7 @@ import {MovieModule} from "../movie/movie.module";
         RootRoutingModule,
         MovieModule
     ],
-  providers: [
-  ],
+  providers: [],
   bootstrap: [RootDefaultComponent]
 })
 export class RootModule {

@@ -9,10 +9,16 @@
 
       <div class="movies-grid">
         <div class="movie-card" *ngFor="let movie of moviesByGenre[genre.name] | slice:0:5" (click)="goToMovieDetails(movie.id)">
-          <div class="movie-poster">
-            <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{ movie.title }}" />
-            <div class="add-to-watchlist" (click)="addMovies($event, movie.id, movie.title,movie.poster_path)">
-              <i class="fas fa-plus"></i>
+
+          <div class="add-remove-movie">
+            <div class="movie-poster">
+              <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{ movie.title }}" />
+              <div class="add-to-watchlist" (click)="addMovies($event, movie.id, movie.title,movie.poster_path)">
+                <i class="fas fa-plus"></i>
+              </div>
+              <div class="remove-to-watchlist" (click)="removeMovies($event, movie.id, movie.title)">
+                <i class="fa fa-minus"></i>
+              </div>
             </div>
           </div>
           <h3>{{ movie.title }}</h3>

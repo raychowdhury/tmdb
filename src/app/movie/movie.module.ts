@@ -27,7 +27,6 @@ import { MovieHeaderComponent } from './components/movie-header/movie-header.com
   exports: [
     MovieHeaderComponent
   ],
-  providers: [
-  ]
+  providers: []
 })
 export class MovieModule { }

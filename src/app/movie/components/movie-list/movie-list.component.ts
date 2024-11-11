@@ -10,6 +10,8 @@ import { Genre } from '../../../interface/genre';  // Import the Genre interface
   styleUrls: ['./movie-list.component.scss']
 })
 export class MovieListComponent implements OnInit {
+
+  watchlistMovieIds: Set<number> = new Set<number>();
   moviesByGenre: { [key: string]: Movie[] } = {};  // Holds movies grouped by genre
   genres: Genre[] = [];  // List of genres
   movieCount: number = 0;
@@ -22,6 +24,12 @@ export class MovieListComponent implements OnInit {
 
   ngOnInit() {
     this.fetchGenresAndMovies();  // Fetch genres and their associated movies on initialization
+
+    // Load the watchlist from local storage
+    const storedWatchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
+
+    // Populate the set with movie IDs from the watchlist
+    this.watchlistMovieIds = new Set(storedWatchlist.map((movie: any) => movie.id));
   }
 
   // Fetch movie genres and their movies
@@ -64,6 +72,41 @@ export class MovieListComponent implements OnInit {
       this.showMessage = false;
     }, 3000);
   }
+
+  removeMovies(event: Event, movieId: number, movieTitle: string) {
+    event.stopPropagation();
+
+    let storedWatchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
+
+    const movieIndex = storedWatchlist.findIndex((movie: any) => movie.id === movieId);
+
+    if (movieIndex !== -1) {
+      // Remove the movie from the watchlist
+      storedWatchlist.splice(movieIndex, 1);
+      localStorage.setItem('watchlist', JSON.stringify(storedWatchlist));
+      console.log(`Removed from watchlist: ${movieTitle}`);
+
+      // Remove from watchlist IDs
+      this.watchlistMovieIds.delete(movieId);
+
+      this.message = `"${movieTitle}" has been removed from your watchlist.`;
+    } else {
+      console.log(`Movie not found in watchlist: ${movieTitle}`);
+
+      this.message = `"${movieTitle}" is not in your watchlist.`;
+    }
+
+    this.showMessage = true; // Show the message
+
+    // Hide the message after 3 seconds
+    setTimeout(() => {
+      this.showMessage = false;
+    }, 3000);
+  }
+
+
+
+
 
 
   goToMovieDetails(movieId: number) {
