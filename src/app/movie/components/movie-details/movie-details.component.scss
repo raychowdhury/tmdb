@@ -3,6 +3,7 @@ $background-light: #f5f5f5;
 $genre-background: #e7e5ff;
 $text-color-dark: #333;
 $text-color-light: #555;
+
 .movie-details-container {
   display: flex;
   flex-direction: column;
@@ -10,6 +11,14 @@ $text-color-light: #555;
   padding: 20px;
   background-color: #f9f9f9;
   font-family: Arial, sans-serif;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px;
+  }
 }
 
 .movie-header {
@@ -18,24 +27,51 @@ $text-color-light: #555;
   width: 100%;
   max-width: 1200px;
   margin-bottom: 30px;
-}
 
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+}
 
 .movie-poster {
   width: 300px;
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 768px) {
+    width: 250px;
+  }
+
+  @media (max-width: 480px) {
+    width: 200px;
+  }
 }
 
 .movie-info {
   flex: 1;
   margin-left: 20px;
   max-width: 800px;
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+    margin-top: 20px;
+    text-align: center;
+  }
 }
 
 h1 {
   font-size: 2.5rem;
   margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.8rem;
+  }
 }
 
 .overview {
@@ -43,6 +79,14 @@ h1 {
   color: #555;
   margin-bottom: 20px;
   line-height: 1.6;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
 }
 
 a {
@@ -58,6 +102,10 @@ a:hover {
 .rating {
   font-size: 1.2rem;
   margin-bottom: 20px;
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
 }
 
 .cast-crew-section {
@@ -66,16 +114,29 @@ a:hover {
   width: 100%;
   max-width: 1200px;
   margin-top: 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .cast-list, .crew-list {
   flex: 1;
   margin: 0 20px;
+
+  @media (max-width: 768px) {
+    margin: 10px 0;
+  }
 }
 
 .cast-list h2, .crew-list h2 {
   font-size: 1.5rem;
   margin-bottom: 10px;
+
+  @media (max-width: 480px) {
+    font-size: 1.3rem;
+  }
 }
 
 .cast-list ul, .crew-list ul {
@@ -86,28 +147,52 @@ a:hover {
 .cast-list li, .crew-list li {
   font-size: 1rem;
   margin-bottom: 8px;
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
 }
 
 .related-movies {
   margin-top: 40px;
   width: 100%;
   max-width: 1200px;
+
+  @media (max-width: 768px) {
+    margin-top: 30px;
+  }
 }
 
 .related-movies h2 {
   font-size: 2rem;
   margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    font-size: 1.8rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+  }
 }
 
 .related-movies-container {
   display: flex;
   gap: 20px;
   overflow-x: auto;
+
+  @media (max-width: 480px) {
+    gap: 15px;
+  }
 }
 
 .related-movie-card {
   min-width: 150px;
   text-align: center;
+
+  @media (max-width: 480px) {
+    min-width: 120px;
+  }
 }
 
 .related-movie-card img {
@@ -119,43 +204,26 @@ a:hover {
 .related-movie-card p {
   font-size: 1rem;
   color: #333;
-}
 
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
+}
 
 .top-bar {
   width: 100%;
-  //background-color: inherit;
   padding: 15px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
 
-//.top-bar button {
-//  background-color: white;
-//  color: #3b82f6;
-//  border: none;
-//  padding: 10px 15px;
-//  border-radius: 5px;
-//  cursor: pointer;
-//  font-size: 16px;
-//  font-weight: bold;
-//}
-//
-//.top-bar button:hover {
-//  background-color: #ffffffcc;
-//}
-
-.movie-details-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  background-color: #f9f9f9;
-  font-family: Arial, sans-serif;
-  //margin-top: 20px;  /* Add margin to create space for top bar */
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: 10px;
+    text-align: center;
+  }
 }
 
 .watchlist-section {
@@ -165,7 +233,12 @@ a:hover {
   padding: 15px 20px;
   background-color: $genre-background;
   border-radius: 10px;
-  //margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px 15px;
+  }
 
   i {
     font-size: 24px;
@@ -183,6 +256,10 @@ a:hover {
     &:hover {
       background-color: darken($primary-color, 10%);
     }
+
+    @media (max-width: 768px) {
+      padding: 8px 15px;
+      font-size: 0.9rem;
+    }
   }
 }
-
