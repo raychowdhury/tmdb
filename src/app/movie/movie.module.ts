@@ -10,6 +10,7 @@ import {HttpClientModule} from "@angular/common/http";
 
 import { MovieWatchListComponent } from './components/movie-watch-list/movie-watch-list.component';
 import { MovieHeaderComponent } from './components/movie-header/movie-header.component';
+import { MovieCardComponent } from './components/movie-card/movie-card.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { MovieHeaderComponent } from './components/movie-header/movie-header.com
     MovieListComponent,
     MovieDetailsComponent,
     MovieWatchListComponent,
-    MovieHeaderComponent
+    MovieHeaderComponent,
+    MovieCardComponent
   ],
   imports: [
     CommonModule,
