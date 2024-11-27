@@ -1,1 +1,25 @@
-<p>movie-card works!</p>
+<div class="movie-card" (click)="onNavigateToDetails()">
+  <div class="movie-poster">
+    <img
+      [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+      alt="{{ movie.title }}"
+    />
+
+    <!-- Conditional display of '+' or '-' button -->
+    <button
+      *ngIf="!isInWatchlist"
+      (click)="onAddMovie($event)"
+      class="add-button"
+    >
+      +
+    </button>
+    <button
+      *ngIf="isInWatchlist"
+      (click)="onRemoveMovie($event)"
+      class="remove-button"
+    >
+      -
+    </button>
+  </div>
+  <h3>{{ movie.title }}</h3>
+</div>
