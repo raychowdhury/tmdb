@@ -7,6 +7,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {CommonModule} from "@angular/common";
 import {MainService} from "../services/main.service";
 import {MovieModule} from "../movie/movie.module";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {MovieModule} from "../movie/movie.module";
         BrowserModule,
         BrowserAnimationsModule,
         RootRoutingModule,
-        MovieModule
+        MovieModule,
+        FormsModule
     ],
   providers: [],
   bootstrap: [RootDefaultComponent]

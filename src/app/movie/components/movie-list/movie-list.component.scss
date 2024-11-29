@@ -27,12 +27,13 @@ $text-color-light: #555;
 
     .movies-grid {
       display: flex;
+      justify-content: space-around;
       flex-wrap: wrap;
-      justify-content: space-between;
       gap: 20px;
       padding: 10px;
       background-color: $genre-background;
       border-radius: 10px;
+      //justify-content: center; // Center align items for better visual appearance
 
       @media (max-width: 768px) {
         gap: 15px;
@@ -50,7 +51,7 @@ $text-color-light: #555;
 .movie-card {
   text-align: center;
   position: relative;
-  flex: 1 0 21%; /* Adjust percentage to control number of cards per row */
+  flex: 1 0 calc(20% - 20px); /* Adjusted to improve horizontal alignment */
   max-width: 180px;
   margin-bottom: 20px;
   cursor: pointer;
@@ -61,18 +62,18 @@ $text-color-light: #555;
   }
 
   @media (max-width: 1024px) {
-    flex: 1 0 30%;
+    flex: 1 0 calc(30% - 15px); /* Slightly larger on smaller screens */
     max-width: 150px;
   }
 
   @media (max-width: 768px) {
-    flex: 1 0 45%;
+    flex: 1 0 calc(45% - 10px); /* Increase size for mobile tablet screens */
     max-width: 120px;
   }
 
   @media (max-width: 480px) {
-    flex: 1 0 45%;
-    max-width: 100px;
+    flex: 1 0 calc(100% - 10px); /* Full width for mobile devices */
+    max-width: 100%;
   }
 
   .movie-poster {
@@ -150,22 +151,41 @@ $text-color-light: #555;
     padding: 8px 15px;
   }
 }
-.message-popup {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #333;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 5px;
-  z-index: 1000;
-  opacity: 0.9;
-  font-size: 16px;
+
+/* Search Bar */
+.search-bar {
+  margin-bottom: 20px;
   text-align: center;
 
-  @media (max-width: 480px) {
-    font-size: 14px;
-    padding: 8px 15px;
+  input {
+    width: 60%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+    @media (max-width: 768px) {
+      width: 80%;
+    }
+
+    @media (max-width: 480px) {
+      width: 90%;
+    }
+  }
+}
+
+/* Improved Layout for Responsive Grid */
+.movies-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-around; // Ensure movies are displayed centered for a balanced look
+
+  @media (max-width: 1024px) {
+    gap: 15px;
+  }
+
+  @media (max-width: 768px) {
+    gap: 10px;
   }
 }

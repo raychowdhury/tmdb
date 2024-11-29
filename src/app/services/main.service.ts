@@ -43,5 +43,4 @@ export class MainService {
     return this.http.get<any>(url);
   }
 
-
 }

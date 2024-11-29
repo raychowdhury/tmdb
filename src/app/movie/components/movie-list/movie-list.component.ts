@@ -12,7 +12,9 @@ import { Genre } from '../../../interface/genre';
 export class MovieListComponent implements OnInit {
   watchlistMovieIds: Set<number> = new Set<number>();
   moviesByGenre: { [key: string]: Movie[] } = {};
+  filteredMovies: Movie[] = [];
   genres: Genre[] = [];
+  searchTerm: string = '';
   message: string = '';
   showMessage: boolean = false;
 
@@ -37,12 +39,37 @@ export class MovieListComponent implements OnInit {
     });
   }
 
-  // Fetch movies by genre ID
+  // Fetch movies by genre ID and add them to moviesByGenre list
   fetchMoviesByGenre(genreId: number, genreName: string) {
     this.movieService.getDiscoverGenre(genreId).subscribe((movieData: any) => {
       this.moviesByGenre[genreName] = movieData.results as Movie[];
     });
   }
+
+  // Search movies based on the search term
+// Search movies based on the search term and remove duplicates
+  onSearch() {
+    if (this.searchTerm.trim() === '') {
+      // If search term is empty, clear filteredMovies
+      this.filteredMovies = [];
+    } else {
+      // Create a flat list of all movies from all genres
+      const allMovies = Object.values(this.moviesByGenre).flat();
+
+      // Filter based on search term and remove duplicates
+      const uniqueMovies = new Map<number, Movie>(); // Using a Map to ensure unique movies by their id
+      allMovies.forEach((movie) => {
+        if (movie.title.toLowerCase().includes(this.searchTerm.toLowerCase())) {
+          // Add movie to Map if it matches the search term, keyed by the movie ID
+          uniqueMovies.set(movie.id, movie);
+        }
+      });
+
+      // Convert the Map values to an array for filteredMovies
+      this.filteredMovies = Array.from(uniqueMovies.values());
+    }
+  }
+
 
   // Add a movie to the watchlist
   addMovie(movie: Movie) {

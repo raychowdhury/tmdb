@@ -11,6 +11,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { MovieWatchListComponent } from './components/movie-watch-list/movie-watch-list.component';
 import { MovieHeaderComponent } from './components/movie-header/movie-header.component';
 import { MovieCardComponent } from './components/movie-card/movie-card.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -19,12 +20,13 @@ import { MovieCardComponent } from './components/movie-card/movie-card.component
     MovieDetailsComponent,
     MovieWatchListComponent,
     MovieHeaderComponent,
-    MovieCardComponent
+    MovieCardComponent,
   ],
   imports: [
     CommonModule,
     MovieRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   exports: [
     MovieHeaderComponent
