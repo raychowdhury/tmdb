@@ -15,6 +15,7 @@ export class MovieListComponent implements OnInit {
   filteredMovies: Movie[] = [];
   genres: Genre[] = [];
   searchTerm: string = '';
+  selectedGenre: string = 'All';
   message: string = '';
   showMessage: boolean = false;
 
@@ -46,30 +47,40 @@ export class MovieListComponent implements OnInit {
     });
   }
 
-  // Search movies based on the search term
-// Search movies based on the search term and remove duplicates
+  // Search and filter movies based on search term and selected genre
   onSearch() {
-    if (this.searchTerm.trim() === '') {
-      // If search term is empty, clear filteredMovies
+    if (this.searchTerm.trim() === '' && this.selectedGenre === 'All') {
       this.filteredMovies = [];
     } else {
       // Create a flat list of all movies from all genres
-      const allMovies = Object.values(this.moviesByGenre).flat();
+      let allMovies = Object.values(this.moviesByGenre).flat();
 
-      // Filter based on search term and remove duplicates
-      const uniqueMovies = new Map<number, Movie>(); // Using a Map to ensure unique movies by their id
+      // Filter by search term if provided
+      if (this.searchTerm.trim() !== '') {
+        allMovies = allMovies.filter((movie) =>
+          movie.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+        );
+      }
+
+      // Filter by selected genre if not 'All'
+      if (this.selectedGenre !== 'All') {
+        allMovies = allMovies.filter((movie) =>
+          Object.keys(this.moviesByGenre).some(
+            (genreName) => genreName === this.selectedGenre && this.moviesByGenre[genreName].includes(movie)
+          )
+        );
+      }
+
+      // Remove duplicates
+      const uniqueMovies = new Map<number, Movie>();
       allMovies.forEach((movie) => {
-        if (movie.title.toLowerCase().includes(this.searchTerm.toLowerCase())) {
-          // Add movie to Map if it matches the search term, keyed by the movie ID
-          uniqueMovies.set(movie.id, movie);
-        }
+        uniqueMovies.set(movie.id, movie);
       });
 
       // Convert the Map values to an array for filteredMovies
       this.filteredMovies = Array.from(uniqueMovies.values());
     }
   }
-
 
   // Add a movie to the watchlist
   addMovie(movie: Movie) {

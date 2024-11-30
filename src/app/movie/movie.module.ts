@@ -12,6 +12,7 @@ import { MovieWatchListComponent } from './components/movie-watch-list/movie-wat
 import { MovieHeaderComponent } from './components/movie-header/movie-header.component';
 import { MovieCardComponent } from './components/movie-card/movie-card.component';
 import {FormsModule} from "@angular/forms";
+import { MovieFilterComponent } from './components/movie-filter/movie-filter.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {FormsModule} from "@angular/forms";
     MovieWatchListComponent,
     MovieHeaderComponent,
     MovieCardComponent,
+    MovieFilterComponent,
   ],
   imports: [
     CommonModule,

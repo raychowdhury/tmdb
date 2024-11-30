@@ -155,6 +155,7 @@ $text-color-light: #555;
 /* Search Bar */
 .search-bar {
   margin-bottom: 20px;
+  width: 80%;
   text-align: center;
 
   input {
@@ -188,4 +189,26 @@ $text-color-light: #555;
   @media (max-width: 768px) {
     gap: 10px;
   }
+}
+
+.filter-section{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.genre-filter{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 18px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 10px;
+  background: white;
+  select{
+    cursor: pointer;
+  }
+
 }
