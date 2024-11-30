@@ -1,0 +1,8 @@
+<div class="filter-container">
+  <h3>Filter Movies</h3>
+  <label for="genre-select">Genre:</label>
+  <select id="genre-select" [(ngModel)]="selectedGenre" (change)="onFilterChange()">
+    <option value="">All Genres</option>
+    <option *ngFor="let genre of genres" [value]="genre.id">{{ genre.name }}</option>
+  </select>
+</div>
