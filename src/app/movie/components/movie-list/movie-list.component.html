@@ -6,8 +6,9 @@
         type="text"
         placeholder="Search for a movie..."
         [(ngModel)]="searchTerm"
-        (input)="onSearch()"
+        (input)="onSearchInputChange()"
       />
+
     </div>
 
     <div class="genre-filter">

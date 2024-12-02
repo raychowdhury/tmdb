@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { MainService } from '../../../services/main.service';
 import { Movie } from '../../../interface/movie';
 import { Genre } from '../../../interface/genre';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-movie-list',
@@ -19,11 +21,21 @@ export class MovieListComponent implements OnInit {
   message: string = '';
   showMessage: boolean = false;
 
+  // Create a Subject to watch changes in the searchTerm
+  private searchSubject: Subject<string> = new Subject<string>();
+
   constructor(private movieService: MainService, private router: Router) {}
 
   ngOnInit() {
     this.loadWatchlist();
     this.fetchGenresAndMovies();
+
+    // Debounce the search functionality using RxJS
+    this.searchSubject
+      .pipe(debounceTime(300)) // Wait for 300ms pause in events
+      .subscribe(() => {
+        this.onSearch();
+      });
   }
 
   // Load the watchlist from localStorage
@@ -47,7 +59,12 @@ export class MovieListComponent implements OnInit {
     });
   }
 
-  // Search and filter movies based on search term and selected genre
+  // Called whenever the search input changes
+  onSearchInputChange() {
+    this.searchSubject.next(this.searchTerm);
+  }
+
+  // Search and filter movies
   onSearch() {
     if (this.searchTerm.trim() === '' && this.selectedGenre === 'All') {
       this.filteredMovies = [];
@@ -66,7 +83,8 @@ export class MovieListComponent implements OnInit {
       if (this.selectedGenre !== 'All') {
         allMovies = allMovies.filter((movie) =>
           Object.keys(this.moviesByGenre).some(
-            (genreName) => genreName === this.selectedGenre && this.moviesByGenre[genreName].includes(movie)
+            (genreName) =>
+              genreName === this.selectedGenre && this.moviesByGenre[genreName].includes(movie)
           )
         );
       }
