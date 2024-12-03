@@ -1,2 +1,7 @@
 <app-movie-header></app-movie-header>
+<!-- Scroll to Top Button -->
+<button (click)="scrollToTop()" class="scroll-to-top-button" *ngIf="showScrollTopButton">
+  ↑ Top
+</button>
+
 <router-outlet></router-outlet>

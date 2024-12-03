@@ -19,62 +19,17 @@ $text-color-light: #555;
     }
 
     .movies-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Responsive grid */
-      gap: 10px;
-      padding: 10px;
+      display: flex;
+      flex-wrap: wrap; /* Allows items to wrap onto multiple lines */
+      gap: 20px; /* Space between items */
+      padding: 20px;
       background-color: $genre-background;
       border-radius: 10px;
-      justify-items: center; /* Centers grid items */
 
-      .movie-card {
-        text-align: center;
-        position: relative;
-        width: 180px; /* Fixed width for movie card */
-        cursor: pointer;
-        transition: transform 0.3s ease; /* Smooth hover effect */
 
-        &:hover {
-          transform: scale(1.05); /* Slight scale effect on hover */
-        }
 
-        .movie-poster {
-          position: relative;
-
-          img {
-            width: 100%; /* Ensures full width */
-            height: auto;
-            border-radius: 8px;
-            aspect-ratio: 2/3;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-          }
-        }
-
-        h3 {
-          margin-top: 10px;
-          font-size: 14px;
-          color: $text-color-light;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis; /* Truncate long titles */
-        }
-
-        button {
-          margin-top: 5px;
-          background-color: $primary-color;
-          color: white;
-          border: none;
-          padding: 5px 10px;
-          border-radius: 5px;
-          cursor: pointer;
-          font-size: 12px;
-
-          &:hover {
-            background-color: darken($primary-color, 10%);
-          }
-        }
-      }
     }
+
   }
 }
 .add-button,

@@ -29,6 +29,7 @@ $text-color-light: #555;
 
     &:hover {
       background-color: darken($primary-color, 10%);
+      //display: block; /* Show the tooltip when hovering over the button *
     }
   }
 }
