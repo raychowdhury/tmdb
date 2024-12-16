@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MainService } from '../../../services/main.service';
 import { Movie } from '../../../interface/movie';
 import { Genre } from '../../../interface/genre';
-import { Subject } from 'rxjs';
+import { Subject, forkJoin } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
@@ -21,7 +21,6 @@ export class MovieListComponent implements OnInit {
   message: string = '';
   showMessage: boolean = false;
 
-  // Create a Subject to watch changes in the searchTerm
   private searchSubject: Subject<string> = new Subject<string>();
 
   constructor(private movieService: MainService, private router: Router) {}
@@ -30,78 +29,99 @@ export class MovieListComponent implements OnInit {
     this.loadWatchlist();
     this.fetchGenresAndMovies();
 
-    // Debounce the search functionality using RxJS
-    this.searchSubject
-      .pipe(debounceTime(300)) // Wait for 300ms pause in events
-      .subscribe(() => {
-        this.onSearch();
-      });
+    // Debounced search input changes
+    this.searchSubject.pipe(debounceTime(300)).subscribe(() => {
+      this.applySearchAndFilter();
+    });
   }
 
-  // Load the watchlist from localStorage
+  // Load watchlist from localStorage
   loadWatchlist() {
     const storedWatchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
     this.watchlistMovieIds = new Set(storedWatchlist.map((movie: any) => movie.id));
   }
 
-  // Fetch genres and their movies
+  // Fetch genres and movies
   fetchGenresAndMovies() {
-    this.movieService.getMovieGenres().subscribe((data: any) => {
-      this.genres = data.genres as Genre[];
-      this.genres.forEach((genre) => this.fetchMoviesByGenre(genre.id, genre.name));
-    });
+    this.movieService.getMovieGenres().subscribe(
+      (data: any) => {
+        // Include 'All' as the first genre
+        this.genres = [{ id: 0, name: 'All' }, ...data.genres] as Genre[];
+        console.log('Fetched genres:', this.genres);
+
+        // Prepare an array of observables for fetching movies by genre
+        const genreObservables = this.genres
+          .filter((genre) => genre.name !== 'All')
+          .map((genre) => this.movieService.getDiscoverGenre(genre.id));
+
+        // Use forkJoin to wait for all movie fetches to complete
+        forkJoin(genreObservables).subscribe(
+          (moviesData: any[]) => {
+            moviesData.forEach((movieData, index) => {
+              const genreName = this.genres[index + 1].name; // +1 to skip 'All'
+              this.moviesByGenre[genreName] = movieData.results as Movie[];
+              console.log(`Fetched movies for genre ${genreName}:`, this.moviesByGenre[genreName]);
+            });
+            this.applySearchAndFilter(); // Apply filters after all movies are fetched
+          },
+          (error) => {
+            console.error('Error fetching movies:', error);
+            this.showTemporaryMessage('Failed to load some movies. Please try again later.');
+          }
+        );
+      },
+      (error) => {
+        console.error('Error fetching genres:', error);
+        this.showTemporaryMessage('Failed to load genres. Please try again later.');
+      }
+    );
   }
 
-  // Fetch movies by genre ID and add them to moviesByGenre list
-  fetchMoviesByGenre(genreId: number, genreName: string) {
-    this.movieService.getDiscoverGenre(genreId).subscribe((movieData: any) => {
-      this.moviesByGenre[genreName] = movieData.results as Movie[];
-    });
-  }
-
-  // Called whenever the search input changes
+  // Search input change triggers the Subject
   onSearchInputChange() {
     this.searchSubject.next(this.searchTerm);
   }
 
-  // Search and filter movies
-  onSearch() {
-    if (this.searchTerm.trim() === '' && this.selectedGenre === 'All') {
-      this.filteredMovies = [];
-    } else {
-      let allMovies = Object.values(this.moviesByGenre).flat();
-
-      if (this.searchTerm.trim() !== '') {
-        allMovies = allMovies.filter((movie) =>
-          movie.title.toLowerCase().includes(this.searchTerm.toLowerCase())
-        );
-      }
-
-      if (this.selectedGenre !== 'All') {
-        allMovies = allMovies.filter((movie) =>
-          Object.keys(this.moviesByGenre).some(
-            (genreName) =>
-              genreName === this.selectedGenre && this.moviesByGenre[genreName].includes(movie)
-          )
-        );
-      }
-
-      const uniqueMovies = new Map<number, Movie>();
-      allMovies.forEach((movie) => {
-        uniqueMovies.set(movie.id, movie);
-      });
-
-      this.filteredMovies = Array.from(uniqueMovies.values());
-    }
+  // Filter change triggers search and filter logic
+  onFilterChange() {
+    this.applySearchAndFilter();
   }
 
+  // Combines search and filter logic
+  applySearchAndFilter() {
+    let allMovies: Movie[] = [];
+
+    if (this.selectedGenre === 'All') {
+      // Combine all movies from all genres
+      allMovies = Object.values(this.moviesByGenre).flat();
+    } else {
+      // Get movies for the selected genre
+      allMovies = this.moviesByGenre[this.selectedGenre] || [];
+    }
+
+    console.log(`After genre filter (${this.selectedGenre}):`, allMovies);
+
+    if (this.searchTerm.trim() !== '') {
+      // Apply search filter
+      allMovies = allMovies.filter((movie) =>
+        movie.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+      console.log(`After search filter ("${this.searchTerm}"):`, allMovies);
+    }
+
+    // Remove duplicates using Map (if necessary)
+    const uniqueMovies = new Map<number, Movie>();
+    allMovies.forEach((movie) => uniqueMovies.set(movie.id, movie));
+
+    // Set the filtered movies
+    this.filteredMovies = Array.from(uniqueMovies.values());
+    console.log('Filtered Movies:', this.filteredMovies);
+  }
 
   // Add a movie to the watchlist
   addMovie(movie: Movie) {
     let storedWatchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
-    const movieExists = storedWatchlist.some((m: any) => m.id === movie.id);
-
-    if (!movieExists) {
+    if (!storedWatchlist.some((m: any) => m.id === movie.id)) {
       storedWatchlist.push({
         id: movie.id,
         title: movie.title,
@@ -110,8 +130,6 @@ export class MovieListComponent implements OnInit {
       localStorage.setItem('watchlist', JSON.stringify(storedWatchlist));
       this.watchlistMovieIds.add(movie.id);
       this.showTemporaryMessage(`"${movie.title}" has been added to your watchlist.`);
-    } else {
-      this.showTemporaryMessage(`"${movie.title}" is already in your watchlist.`);
     }
   }
 
@@ -119,27 +137,24 @@ export class MovieListComponent implements OnInit {
   removeMovie(movie: Movie) {
     let storedWatchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
     const movieIndex = storedWatchlist.findIndex((m: any) => m.id === movie.id);
-
     if (movieIndex !== -1) {
       storedWatchlist.splice(movieIndex, 1);
       localStorage.setItem('watchlist', JSON.stringify(storedWatchlist));
       this.watchlistMovieIds.delete(movie.id);
       this.showTemporaryMessage(`"${movie.title}" has been removed from your watchlist.`);
-    } else {
-      this.showTemporaryMessage(`"${movie.title}" is not in your watchlist.`);
     }
   }
 
-  // Show a temporary message
+  // Display a temporary message
   showTemporaryMessage(message: string) {
     this.message = message;
     this.showMessage = true;
     setTimeout(() => {
       this.showMessage = false;
-    }, 3000); // Show message for 3 seconds
+    }, 3000);
   }
 
-  // Navigate to the movie details page
+  // Navigate to movie details
   goToMovieDetails(movieId: number) {
     this.router.navigate(['/movie-details', movieId]);
   }
