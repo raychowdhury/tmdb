@@ -69,17 +69,14 @@ export class MovieListComponent implements OnInit {
     if (this.searchTerm.trim() === '' && this.selectedGenre === 'All') {
       this.filteredMovies = [];
     } else {
-      // Create a flat list of all movies from all genres
       let allMovies = Object.values(this.moviesByGenre).flat();
 
-      // Filter by search term if provided
       if (this.searchTerm.trim() !== '') {
         allMovies = allMovies.filter((movie) =>
           movie.title.toLowerCase().includes(this.searchTerm.toLowerCase())
         );
       }
 
-      // Filter by selected genre if not 'All'
       if (this.selectedGenre !== 'All') {
         allMovies = allMovies.filter((movie) =>
           Object.keys(this.moviesByGenre).some(
@@ -89,16 +86,15 @@ export class MovieListComponent implements OnInit {
         );
       }
 
-      // Remove duplicates
       const uniqueMovies = new Map<number, Movie>();
       allMovies.forEach((movie) => {
         uniqueMovies.set(movie.id, movie);
       });
 
-      // Convert the Map values to an array for filteredMovies
       this.filteredMovies = Array.from(uniqueMovies.values());
     }
   }
+
 
   // Add a movie to the watchlist
   addMovie(movie: Movie) {
